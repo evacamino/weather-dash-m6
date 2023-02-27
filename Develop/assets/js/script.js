@@ -1,43 +1,54 @@
 (function ($) {
-  const cityInput = $("#cityInput")
-  const submitCity = $("submit-city")
-  let fiveDays = $("#five-days")
-  const apiKey = '1cd86b48a34044a569ad1b7f317f1eb4'
-  let cityStorage = JSON.parse(localStorage.getItem('history')) || []
+  const cityInput = $("#cityInput");
+  const submitCity = $("submit-city");
+  let fiveDays = $("#five-days");
+  const apiKey = "1cd86b48a34044a569ad1b7f317f1eb4";
+  let cityStorage = JSON.parse(localStorage.getItem("history")) || [];
 
   function getWeather(searchItem) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchItem}&appid=${apiKey}`
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchItem}&appid=${apiKey}`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        cityInput.html('')
-        fiveDays.html('')
-        displayDay(data)
+        console.log(data);
+        cityInput.html("");
+        fiveDays.html("");
+        displayDay(data);
       });
-
   }
   function displayDay(data) {
-    let card = $('<div>')
-    card.addClass('card')
-    let cardBody = $('<div>')
-    card.addClass('card-body')
-    let cardTitle = $('<div>')
-    card.addClass('card-title')
-    let cardText = $('<div>')
-    card.addClass('card-text')
-    cardTitle.text(new Date(data.dt))
-    cardText.html(`<p>tempture: ${data.main.temp}</p><p><p>humidity: ${data.main.humidity}</p><p>wind: ${data.wind.speed}</p>`)
-    cardBody.append(cardTitle).append(cardText)
+    let card = $("<div>");
+    card.addClass("card");
+    let cardBody = $("<div>");
+    card.addClass("card-body");
+    let cardTitle = $("<div>");
+    card.addClass("card-title");
+    let cardText = $("<div>");
+    card.addClass("card-text");
+    cardTitle.text(new Date(data.dt));
+    cardText.html(
+      `<p>tempture: ${data.main.temp}</p><p><p>humidity: ${data.main.humidity}</p><p>wind: ${data.wind.speed}</p>`
+    );
+    cardBody.append(cardTitle).append(cardText);
 
-
-    card.append(cardBody)
-    $('#oneDayDisplay').append(card)
+    card.append(cardBody);
+    $("#oneDayDisplay").append(card);
   }
-  getWeather('London')
+  //getWeather();
+  function Searching (){
+    this.getWeather$('#cityInput').value;
+  }
 
-
-
+  document.querySelector("#submit-city").addEventListener("click", function () {
+    // reach into the html and grab that text box
+    const citySearchEl = document.querySelector('#cityInput')
+    // extract the value of that box
+    console.log(citySearchEl)
+    console.dir(citySearchEl)
+    const cityText = citySearchEl.value;
+    // pass that value into get weather
+    getWeather(cityText);
+  });
 })(jQuery);
 
 //</div>
