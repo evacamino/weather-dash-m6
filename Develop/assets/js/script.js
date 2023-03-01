@@ -11,11 +11,31 @@
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        fiveDay(data.coord.lat, data.coord.lon)
         cityInput.html("");
         fiveDays.html("");
         displayDay(data);
       });
   }
+  function fiveDay (lat,lon){
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+    fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+    for (let i = 0; i < data.list.length; i += 8){
+      console.log(data.list[i]);
+    }
+
+
+
+
+    })
+    function displayFive (data) {
+      
+    }
+  } 
+
   function displayDay(data) {
     let card = $("<div>");
     card.addClass("card");
@@ -40,16 +60,18 @@
   }
 
   document.querySelector("#submit-city").addEventListener("click", function () {
-    // reach into the html and grab that text box
     const citySearchEl = document.querySelector('#cityInput')
-    // extract the value of that box
-    console.log(citySearchEl)
-    console.dir(citySearchEl)
+    //console.log(citySearchEl)
+   // console.dir(citySearchEl)
     const cityText = citySearchEl.value;
-    // pass that value into get weather
     getWeather(cityText);
   });
+
 })(jQuery);
+// for (let i = 0; i < 5; i++) {
+
+//}
+
 
 //</div>
 // {/* <div class="card bg-light mb-3" style="max-width: 18rem;">
